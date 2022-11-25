@@ -1,5 +1,5 @@
 # Slim Secure Session Middleware
-Secure session middleware for [Slim 3 framework](http://www.slimframework.com/).
+Secure session middleware for [Slim 4 framework](http://www.slimframework.com/).
 - longer and more secure session id's
 - session data encryption
 - set session cookie path, domain and secure values automatically

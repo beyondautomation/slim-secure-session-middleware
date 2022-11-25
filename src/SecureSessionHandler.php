@@ -2,8 +2,8 @@
 
 namespace Adbar;
 
-use SessionHandler;
 use RuntimeException;
+use SessionHandler;
 
 /**
  * Safe Session Handler
@@ -33,20 +33,20 @@ class SecureSessionHandler extends SessionHandler
     /**
      * Read session data
      *
-     * @param  string $id Session id
+     * @param  string $sid Session id
      * @return string
      */
     public function read($sid)
     {
         $data = parent::read($sid);
 
-        return ($data) ? $this->decrypt($data) : '';
+        return $data ? $this->decrypt($data) : '';
     }
 
     /**
      * Write session data
      *
-     * @param string $id   Session id
+     * @param string $sid   Session id
      * @param string $data Session data
      */
     public function write($sid, $data)
@@ -67,8 +67,8 @@ class SecureSessionHandler extends SessionHandler
         $salt = random_bytes(16);
 
         $salted = hash('sha512', $this->key . $salt, true);
-        $key    = substr($salted, 0, 32);
-        $iv     = substr($salted, 32, 16);
+        $key = substr($salted, 0, 32);
+        $iv = substr($salted, 32, 16);
 
         $encryptedData = openssl_encrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
         return base64_encode($salt . $encryptedData);
@@ -87,8 +87,8 @@ class SecureSessionHandler extends SessionHandler
         $data = substr($data, 16);
 
         $salted = hash('sha512', $this->key . $salt, true);
-        $key    = substr($salted, 0, 32);
-        $iv     = substr($salted, 32, 16);
+        $key = substr($salted, 0, 32);
+        $iv = substr($salted, 32, 16);
 
         return openssl_decrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
     }
