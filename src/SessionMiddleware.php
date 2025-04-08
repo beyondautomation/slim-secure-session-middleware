@@ -126,8 +126,8 @@ final class SessionMiddleware implements MiddlewareInterface
 			ini_set('session.entropy_file', '/dev/urandom');
 			ini_set('session.entropy_length', 128);
 			ini_set('session.hash_function', 'sha512');
-		} else {
-			// PHP version >= 7.1
+		} else if (version_compare(PHP_VERSION, '8.4', '<')) {
+			// PHP version >= 7.1 and < 8.4
 			ini_set('session.sid_length', 128);
 		}
 
